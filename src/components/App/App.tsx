@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import css from './App.module.css';
 import SearchBar from '../SearchBar/SearchBar';
 import MovieGrid from '../MovieGrid/MovieGrid';
@@ -34,9 +34,10 @@ function App() {
     setSelectedMovie(movie);
   };
 
-  if(data && data.results.length === 0){
-    toast.error('No movies found for your request.');
-  }
+  useEffect(() => {
+    if(data?.results.length === 0)
+      toast.error('No movies found for your request.');
+  }, [isSuccess, data])
 
   return (
     <div className={css.app}>
