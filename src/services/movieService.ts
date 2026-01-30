@@ -10,16 +10,20 @@ interface HttpsMovieResponse {
   total_results: number;
 }
 
-async function fetchMovies(query: string): Promise<Movie[]> {
+async function fetchMovies(query: string, page: number) {
   const response = await axios.get<HttpsMovieResponse>(
-    `https://api.themoviedb.org/3/search/movie?query=${query}`,
+    `https://api.themoviedb.org/3/search/movie`,
     {
       headers: {
         Authorization: `Bearer ${myKey}`,
       },
+      params: {
+        query,
+        page,
+      },
     }
   );
-  return response.data.results;
+  return response.data;
 }
 
 export default fetchMovies;
